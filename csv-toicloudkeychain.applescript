@@ -1,8 +1,8 @@
--- select the csv to import to iCloud keychain
+	-- select the csv to import to iCloud keychain
 set theFile to (choose file with prompt "Select the CSV file")
 
 -- read csv file
-set f to read theFile
+set f to (read theFile as Çclass utf8È)
 
 -- split lines into records
 set recs to paragraphs of f
@@ -31,27 +31,32 @@ repeat with i from 1 to length of recs
 	set kcURL to text item 1 of (item i of recs)
 	set kcUsername to text item 2 of (item i of recs)
 	set kcPassword to text item 3 of (item i of recs)
-	
+	log item i of recs
 	-- write kcURL, kcUsername and kcPassword into text fields of safari passwords
 	tell application "System Events"
 		tell application process "Safari"
 			set frontmost to true
 			tell window 1
-				
 				click button "Add" of group 1 of group 1 of it
 				-- write fields
-				tell last row of table 1 of scroll area of group 1 of group 1 of it
+				tell sheet 1 of it
+					set focused of text field 1 of it to true
 					set value of text field 1 of it to kcURL
 					keystroke tab
+					
+					set focused of text field 2 of it to true
 					set value of text field 2 of it to kcUsername
 					keystroke tab
+					
+					set focused of text field 3 of it to true
 					set value of text field 3 of it to kcPassword
-					keystroke return
+					
+					-- keystroke return
+					click button "Add Password" of it
 				end tell
 				
 			end tell
 		end tell
 	end tell
 end repeat
-
 
