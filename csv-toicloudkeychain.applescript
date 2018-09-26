@@ -1,8 +1,8 @@
-	-- select the csv to import to iCloud keychain
+-- select the csv to import to iCloud keychain
 set theFile to (choose file with prompt "Select the CSV file")
 
 -- read csv file
-set f to (read theFile as Çclass utf8È)
+set f to (read theFile as Â«class utf8Â»)
 
 -- split lines into records
 set recs to paragraphs of f
@@ -43,20 +43,19 @@ repeat with i from 1 to length of recs
 					set focused of text field 1 of it to true
 					set value of text field 1 of it to kcURL
 					keystroke tab
-					
+
 					set focused of text field 2 of it to true
 					set value of text field 2 of it to kcUsername
 					keystroke tab
-					
+
 					set focused of text field 3 of it to true
 					set value of text field 3 of it to kcPassword
-					
+
 					-- keystroke return
 					click button "Add Password" of it
 				end tell
-				
+
 			end tell
 		end tell
 	end tell
 end repeat
-
